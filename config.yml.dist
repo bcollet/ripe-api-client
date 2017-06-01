@@ -1,0 +1,8 @@
+#base_url: 'http://sandbox.alt.tf/whois/glanet'
+base_url: 'https://rest.db.ripe.net/ripe'
+params:
+  password:
+    - 'mnt1-password'
+    - 'mnt2-password'
+    - 'mnt3-password'
+  unfiltered: True            # Needed to get all attributes

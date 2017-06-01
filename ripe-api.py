@@ -120,6 +120,8 @@ def edit(args):
         update(parser.parse_args(["update", args.type, args.key, tmp_name]))
     else:
         print "Object unchanged, not updating"
+
+    os.unlink(tmp_name)
     return
 
 

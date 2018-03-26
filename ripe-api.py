@@ -134,7 +134,7 @@ def edit(args):
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers(help='Action to perform',dest='action')
 
-parser_get = subparsers.add_parser('get', help='Delete an object')
+parser_get = subparsers.add_parser('get', help='Get an object')
 parser_get.add_argument('type', type=str, help='Object type')
 parser_get.add_argument('key', type=str, help='Object identifier')
 parser_get.add_argument('file', type=argparse.FileType('w'), help='Output file')

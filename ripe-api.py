@@ -52,8 +52,8 @@ def read_input(object_file):
     attr = []
     for line in object_file.readlines():
         if not line: continue
-        attr.append({'name':line.split(':')[0].strip(),
-                     'value':line.split(':')[1].strip() })
+        attr.append({'name':line.split(':', 1)[0].strip(),
+                     'value':line.split(':', 1)[1].strip() })
 
     object_data = {
         "objects": {

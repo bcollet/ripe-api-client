@@ -9,9 +9,10 @@ import os
 import hashlib
 from subprocess import call
 
+config = os.path.join(os.path.dirname(os.path.realpath(__file__)),"config.yml")
 
 # Read configuration
-with open("config.yml", 'r') as ymlfile:
+with open(config, 'r') as ymlfile:
     cfg = yaml.load(ymlfile)
 
 

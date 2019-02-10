@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import requests
 import json
 import yaml
@@ -23,7 +23,7 @@ def call_api(method, url, object_data=None):
     response = requests.request(method, url, json=object_data, headers=headers,
                                 params=cfg['params'])
     if not response.text:
-        print "No response received (error %i)" % response.status_code
+        print("No response received (error %i)" % response.status_code)
         sys.exit(1)
 
     json_response=json.loads(response.text)
@@ -31,10 +31,10 @@ def call_api(method, url, object_data=None):
     if "errormessages" in json_response:
         for err in json_response['errormessages']['errormessage']:
             if 'args' in err:
-                print err['text'].replace('\n', ' ').replace('\r', '') \
-                    % tuple([d['value'] for d in err['args']])
+                print(err['text'].replace('\n', ' ').replace('\r', '') \
+                    % tuple([d['value'] for d in err['args']]))
             else:
-                print err['text']
+                print(err['text'])
 
     return json_response
 
@@ -72,7 +72,7 @@ def read_input(object_file):
 
 # Get record
 def get(args):
-    print "Getting %s object %s" % (args.type, args.key)
+    print("Getting %s object %s" % (args.type, args.key))
     url = '/'.join((cfg['base_url'],args.type,args.key))
     json_response=call_api("GET", url)
     print_output(json_response, args.file)
@@ -81,7 +81,7 @@ def get(args):
 
 # Delete record
 def delete(args):
-    print "Deleting %s object %s" % (args.type, args.key)
+    print("Deleting %s object %s" % (args.type, args.key))
     url = '/'.join((cfg['base_url'],args.type,args.key))
     json_response=call_api("DELETE", url)
     return
@@ -89,7 +89,7 @@ def delete(args):
 
 # Create record
 def create(args):
-    print "Creating %s object" % (args.type)
+    print("Creating %s object" % (args.type))
     url = '/'.join((cfg['base_url'],args.type))
     object_data = read_input(args.file)
     json_response=call_api("POST", url, object_data)
@@ -99,7 +99,7 @@ def create(args):
 
 # Update record
 def update(args):
-    print "Updating %s object %s" % (args.type, args.key)
+    print("Updating %s object %s" % (args.type, args.key))
     url = '/'.join((cfg['base_url'],args.type,args.key))
     object_data = read_input(args.file)
     json_response=call_api("PUT", url, object_data)
@@ -113,14 +113,14 @@ def edit(args):
     get(parser.parse_args(["get", args.type, args.key, tmp_name]))
     EDITOR = os.environ.get('EDITOR','vim')
     # Memory inefficient, but who cares?
-    hash1 = hashlib.md5(open(tmp_name).read()).hexdigest()
+    hash1 = hashlib.md5(open(tmp_name).read().encode('utf-8')).hexdigest()
     call([EDITOR, tmp_name])
-    hash2 = hashlib.md5(open(tmp_name).read()).hexdigest()
+    hash2 = hashlib.md5(open(tmp_name).read().encode('utf-8')).hexdigest()
 
     if hash1 != hash2:
         update(parser.parse_args(["update", args.type, args.key, tmp_name]))
     else:
-        print "Object unchanged, not updating"
+        print("Object unchanged, not updating")
 
     os.unlink(tmp_name)
     return

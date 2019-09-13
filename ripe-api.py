@@ -13,7 +13,7 @@ config = os.path.join(os.path.dirname(os.path.realpath(__file__)),"config.yml")
 
 # Read configuration
 with open(config, 'r') as ymlfile:
-    cfg = yaml.load(ymlfile)
+    cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
 
 
 # Functions

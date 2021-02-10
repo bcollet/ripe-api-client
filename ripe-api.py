@@ -125,37 +125,38 @@ def edit(args):
     os.unlink(tmp_name)
     return
 
+if __name__ == '__main__':
 
-# Arguments parsing
-# USAGE : ./ripe-api.py delete <TYPE> <KEY>
-#         ./ripe-api.py create <TYPE> <FILE>
-#         ./ripe-api.py update <TYPE> <KEY> <FILE>
-#         ./ripe-api.py get <TYPE> <KEY> <FILE>
-#         ./ripe-api.py edit <TYPE> <KEY>
-parser = argparse.ArgumentParser()
-subparsers = parser.add_subparsers(help='Action to perform',dest='action')
+    # Arguments parsing
+    # USAGE : ./ripe-api.py delete <TYPE> <KEY>
+    #         ./ripe-api.py create <TYPE> <FILE>
+    #         ./ripe-api.py update <TYPE> <KEY> <FILE>
+    #         ./ripe-api.py get <TYPE> <KEY> <FILE>
+    #         ./ripe-api.py edit <TYPE> <KEY>
+    parser = argparse.ArgumentParser(description='RIPE API client')
+    subparsers = parser.add_subparsers(help='Action to perform',dest='action',required=True)
 
-parser_get = subparsers.add_parser('get', help='Get an object')
-parser_get.add_argument('type', type=str, help='Object type')
-parser_get.add_argument('key', type=str, help='Object identifier')
-parser_get.add_argument('file', type=argparse.FileType('w'), help='Output file')
+    parser_get = subparsers.add_parser('get', help='Get an object')
+    parser_get.add_argument('type', type=str, help='Object type')
+    parser_get.add_argument('key', type=str, help='Object identifier')
+    parser_get.add_argument('file', type=argparse.FileType('w'), help='Output file')
 
-parser_delete = subparsers.add_parser('delete', help='Delete an object')
-parser_delete.add_argument('type', type=str, help='Object type')
-parser_delete.add_argument('key', type=str, help='Object identifier')
+    parser_delete = subparsers.add_parser('delete', help='Delete an object')
+    parser_delete.add_argument('type', type=str, help='Object type')
+    parser_delete.add_argument('key', type=str, help='Object identifier')
 
-parser_post = subparsers.add_parser('create', help='Create an object')
-parser_post.add_argument('type', type=str, help='Object type')
-parser_post.add_argument('file', type=argparse.FileType('r'), help='Input file')
+    parser_post = subparsers.add_parser('create', help='Create an object')
+    parser_post.add_argument('type', type=str, help='Object type')
+    parser_post.add_argument('file', type=argparse.FileType('r'), help='Input file')
 
-parser_put = subparsers.add_parser('update', help='Update an object')
-parser_put.add_argument('type', type=str, help='Object type')
-parser_put.add_argument('key', type=str, help='Object identifier')
-parser_put.add_argument('file', type=argparse.FileType('r'), help='Input file')
+    parser_put = subparsers.add_parser('update', help='Update an object')
+    parser_put.add_argument('type', type=str, help='Object type')
+    parser_put.add_argument('key', type=str, help='Object identifier')
+    parser_put.add_argument('file', type=argparse.FileType('r'), help='Input file')
 
-parser_edit = subparsers.add_parser('edit', help='Edit an object')
-parser_edit.add_argument('type', type=str, help='Object type')
-parser_edit.add_argument('key', type=str, help='Object identifier')
+    parser_edit = subparsers.add_parser('edit', help='Edit an object')
+    parser_edit.add_argument('type', type=str, help='Object type')
+    parser_edit.add_argument('key', type=str, help='Object identifier')
 
-args = parser.parse_args()
-globals()[args.action](args)
+    args = parser.parse_args()
+    globals()[args.action](args)
